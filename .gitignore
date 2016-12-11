@@ -1,4 +1,4 @@
-.save
-.swp
-.pyc
+*.save
+*.swp
+*.pyc
 
