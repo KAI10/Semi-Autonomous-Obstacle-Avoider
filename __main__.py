@@ -36,17 +36,15 @@ imu.setCompassEnable(True)
 def main():
 
     count = 0
-    
     leftp.start(0)
     rightp.start(0)
 
     forward()
-    #time.sleep(0.1)
 
     # acc_x, acc_y, yaw, yawrate = mpuRead(imu)
     # adjusting at start
     # forwardAdjust(yaw, yawrate)
-    
+   
     try:
         while True:
 

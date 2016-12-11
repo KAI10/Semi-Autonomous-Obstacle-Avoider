@@ -97,6 +97,7 @@ def turnRight():
 
 def forwardAdjust(yaw, yawrate, right_motor_dc, left_motor_dc, count):
     # Forward Moving Adjustment based on MPU Data
+ 
     '''
     diff = yawRateFactor * yawrate
     if yawrate > yawRateThreshold:
@@ -108,6 +109,7 @@ def forwardAdjust(yaw, yawrate, right_motor_dc, left_motor_dc, count):
         right_motor_dc = 100 - diff
     '''
     print("R_DC = " + str(right_motor_dc) + " L_DC = " + str(left_motor_dc))
+    
     # Forward Moving Adjustment based on duty cycle
     count += 1
     if count % 3 == 0:
