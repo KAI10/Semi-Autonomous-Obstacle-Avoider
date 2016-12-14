@@ -11,6 +11,12 @@ def init():
     
     global yawRateThreshold
     global yawRateFactor
+
+    global yawErrorFactor
+    global yawErrorDerivativeFactor
+
+    global referenceQPose 
+    referenceQPose = (0.99705213, 0.0035882, -0.01229929, -0.07083318)
     
     min_obstacle_distance = 40
     
@@ -22,5 +28,11 @@ def init():
     
     measurement_interval = 0.015
     
+    yawDiffThreshold = 0.01745
+    yawDiffFactor = 5
+
     yawRateThreshold = 0.05
     yawRateFactor = 2
+
+    yawErrorFactor = 0.1
+    yawErrorDerivativeFactor = 0.001
