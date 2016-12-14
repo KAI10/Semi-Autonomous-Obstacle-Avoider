@@ -34,16 +34,17 @@ imu.setCompassEnable(True)
 ############ Robot Run Start From Here ####################
 
 def main():
+
+    count = 0
     leftp.start(0)
     rightp.start(0)
 
     forward()
-    time.sleep(0.1)
 
     # acc_x, acc_y, yaw, yawrate = mpuRead(imu)
     # adjusting at start
     # forwardAdjust(yaw, yawrate)
-
+   
     try:
         while True:
 
@@ -74,7 +75,7 @@ def main():
                 turnRight()
             else:
                 GPIO.output(LED, 0)
-                # forwardAdjust(yaw, yawrate)
+                parameters.right_motor_dc, parameters.left_motor_dc, count = forwardAdjust(yaw, yawrate, parameters.right_motor_dc, parameters.left_motor_dc, count)
                 forward()
 
             #time.sleep(measurement_interval)

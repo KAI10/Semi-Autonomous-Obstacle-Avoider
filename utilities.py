@@ -2,8 +2,10 @@
 from GPIO_pinouts import *
 
 # necessary parameters defined here
-from parameters import *
+import parameters
 
+# INITIALIZATION OF PARAMETER
+parameters.init()
 
 # FUNCTIONS
 
@@ -74,26 +76,29 @@ def rightMotorBackward(dc=100):
 
 
 def forward():
-    leftMotorForward(left_motor_dc)
-    rightMotorForward(right_motor_dc)
+    leftMotorForward(parameters.left_motor_dc)
+    rightMotorForward(parameters.right_motor_dc)
 
 
 def backward():
-    leftMotorBackward(left_motor_dc)
-    rightMotorBackward(right_motor_dc)
+    leftMotorBackward(parameters.left_motor_dc)
+    rightMotorBackward(parameters.right_motor_dc)
 
 
 def turnLeft():
     leftMotorStop()
-    rightMotorForward(right_motor_dc)
+    rightMotorForward(parameters.right_motor_dc)
 
 
 def turnRight():
     rightMotorStop()
-    leftMotorForward(left_motor_dc)
+    leftMotorForward(parameters.left_motor_dc)
 
 
-def forwardAdjust(yaw, yawrate):
+def forwardAdjust(yaw, yawrate, right_motor_dc, left_motor_dc, count):
+    # Forward Moving Adjustment based on MPU Data
+ 
+    '''
     diff = yawRateFactor * yawrate
     if yawrate > yawRateThreshold:
         right_motor_dc = 100
@@ -102,5 +107,13 @@ def forwardAdjust(yaw, yawrate):
     elif yawrate < -yawRateThreshold:
         left_motor_dc = 100
         right_motor_dc = 100 - diff
-
+    '''
     print("R_DC = " + str(right_motor_dc) + " L_DC = " + str(left_motor_dc))
+    
+    # Forward Moving Adjustment based on duty cycle
+    count += 1
+    if count % 3 == 0:
+        right_motor_dc += 0.76
+    elif count % 1 == 0:
+        right_motor_dc -= 0.38
+    return right_motor_dc, left_motor_dc, count
