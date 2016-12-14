@@ -14,9 +14,14 @@ def mpuRead(imu):
         pass
 
     data = imu.getIMUData()
+
     fusionPose = data["fusionPose"]
+    fusionQPose = data["fusionQPose"]
     Gyro = data["gyro"]
     Accel = data["accel"]
+
+    correctedQPose = parameters.referenceQPose.conjugate() * fusionQPose
+    correctedQPose.toEuler(fusionPose)
 
     # values in radian
     yaw = fusionPose[2]
@@ -117,3 +122,26 @@ def forwardAdjust(yaw, yawrate, right_motor_dc, left_motor_dc, count):
     elif count % 1 == 0:
         right_motor_dc -= 0.38
     return right_motor_dc, left_motor_dc, count
+
+
+def forwardAdjust(yawDiff):
+    diff = yawDiff * parameters.yawDiffFactor
+
+    if yawDiff > parameters.yawDiffThreshold:
+        parameters.right_motor_dc = 100
+        parameters.left_motor_dc = 100 - diff
+
+    elif yawDiff < - parameters.yawDiffThreshold:
+        parameters.left_motor_dc = 100
+        parameters.right_motor_dc = 100 - diff
+
+    print("R_DC = " + str(parameters.right_motor_dc) + " L_DC = " + str(parameters.left_motor_dc))
+
+
+def forwarAdjustPD(yaw_error, yaw_error_derivative):
+    parameters.left_motor_dc = 100
+    parameters.right_motor_dc += parameters.yawErrorFactor * yaw_error + parameters.yawErrorDerivativeFactor * yaw_error_derivative
+    print parameters.right_motor_dc
+    if parameters.right_motor_dc > 100 or parameters.right_motor_dc < 0:
+        print "Right motor dc invalid!!!"
+        exit()
