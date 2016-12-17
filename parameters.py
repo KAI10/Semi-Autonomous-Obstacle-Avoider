@@ -7,10 +7,10 @@ def init():
     global turn_dc
     global lowest_dc
     
-    min_obstacle_distance = 40
+    min_obstacle_distance = 30
     
     left_motor_dc = 100
-    right_motor_dc = 77.3
+    right_motor_dc = 79.8
     
-    turn_dc = 75
+    turn_dc = 90
     lowest_dc = 70

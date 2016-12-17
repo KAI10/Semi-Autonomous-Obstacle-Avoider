@@ -3,7 +3,7 @@ from GPIO_pinouts import *
 
 # necessary parameters defined here
 import parameters
-
+import time
 # INITIALIZATION OF PARAMETER
 parameters.init()
 
@@ -63,11 +63,11 @@ def turnRight():
     
 def rightRotate():
     turnRight()
-    time.sleep(1)
+    time.sleep(0.58)
 
 def leftRotate():
     turnLeft()
-    time.sleep(1)
+    time.sleep(0.5)
 
 def forwardAdjust(right_motor_dc, left_motor_dc, count):
     print("R_DC = " + str(right_motor_dc) + " L_DC = " + str(left_motor_dc))
@@ -82,15 +82,16 @@ def forwardAdjust(right_motor_dc, left_motor_dc, count):
 def avoidObstacle():
     rightRotate()
     forward()
-    time.sleep(1)
+    time.sleep(2)
     leftRotate()
     forward()
-    time.sleep(1)
+    time.sleep(2)
     leftRotate()
     forward()
-    time.sleep(1)
+    time.sleep(2)
     rightRotate()
     forward()
+    time.sleep(2)
 
 def getSonarDistance():
     # Give Trigger pulse
