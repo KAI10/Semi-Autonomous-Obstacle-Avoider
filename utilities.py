@@ -53,16 +53,21 @@ def backward():
     leftMotorBackward(parameters.left_motor_dc)
     rightMotorBackward(parameters.right_motor_dc)
 
-
 def turnLeft():
     leftMotorStop()
-    rightMotorForward(parameters.right_motor_dc)
-
+    rightMotorForward(parameters.turn_dc)
 
 def turnRight():
     rightMotorStop()
-    leftMotorForward(parameters.left_motor_dc)
+    leftMotorForward(parameters.turn_dc)
+    
+def rightRotate():
+    turnRight()
+    time.sleep(1)
 
+def leftRotate():
+    turnLeft()
+    time.sleep(1)
 
 def forwardAdjust(right_motor_dc, left_motor_dc, count):
     print("R_DC = " + str(right_motor_dc) + " L_DC = " + str(left_motor_dc))
@@ -73,4 +78,37 @@ def forwardAdjust(right_motor_dc, left_motor_dc, count):
     elif count % 1 == 0:
         right_motor_dc -= 0.38
     return right_motor_dc, left_motor_dc, count
+    
+def avoidObstacle():
+    rightRotate()
+    forward()
+    time.sleep(1)
+    leftRotate()
+    forward()
+    time.sleep(1)
+    leftRotate()
+    forward()
+    time.sleep(1)
+    rightRotate()
+    forward()
+
+def getSonarDistance():
+    # Give Trigger pulse
+    GPIO.output(TRIG, 1)
+    time.sleep(.00001)
+    GPIO.output(TRIG, 0)
+
+    # Wait for device to send sound
+    while GPIO.input(ECHO) == 0:
+        pass
+
+    sonar_echo_send_time = time.time()
+    # Wait for echo
+    while GPIO.input(ECHO) == 1:
+        pass
+    sonar_echo_recieve_time = time.time()
+
+    dist = (sonar_echo_recieve_time - sonar_echo_send_time) * 17000;
+    print(dist)
+    return dist
 
