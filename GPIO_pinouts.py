@@ -1,19 +1,27 @@
 import RPi.GPIO as GPIO
 
-# Sonar pins
+# Sonar PINS
 LED = 40
 TRIG = 36
 ECHO = 38
 
-# Left Motor parameters
+# Left Motor PINS
 leftSoftPWM = 11
 leftStepPinForward = 13
 leftStepPinBackward = 15
 
-# Right Motor parameters
+# Right Motor PINS
 rightSoftPWM = 22
 rightStepPinForward = 24
 rightStepPinBackward = 26
+
+# Left Motor Encoder PIN
+leftMotorEncoderOut = 19
+
+# Right Motor Encoder PIN
+rightMotorEncoderOut = 16
+
+# Motor Encoder PINS
 
 # GPIO Setup
 GPIO.setmode(GPIO.BOARD)
@@ -43,3 +51,11 @@ leftp = GPIO.PWM(leftSoftPWM, 50)
 # RIGHT MOTOR PWM
 GPIO.setup(rightSoftPWM, GPIO.OUT)
 rightp = GPIO.PWM(rightSoftPWM, 50)
+
+# Left Motor Encoder
+# setup done when necessary
+# GPIO.setup(leftMotorEncoderOut, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+# Right Motor Encoder
+# GPIO.setup(rightMotorEncoderOut, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+# setup done when necessary

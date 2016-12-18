@@ -9,34 +9,30 @@ parameters.init()
 
 # FUNCTIONS
 
+######### Motor Functions ####################
 
 def leftMotorForward(dc=100):
     leftp.ChangeDutyCycle(dc)
     GPIO.output(leftStepPinForward, GPIO.HIGH)
     GPIO.output(leftStepPinBackward, GPIO.LOW)
 
-
 def leftMotorStop():
     GPIO.output(leftStepPinForward, GPIO.LOW)
     GPIO.output(leftStepPinBackward, GPIO.LOW)
-
 
 def leftMotorBackward(dc=100):
     leftp.ChangeDutyCycle(dc)
     GPIO.output(leftStepPinForward, GPIO.LOW)
     GPIO.output(leftStepPinBackward, GPIO.HIGH)
 
-
 def rightMotorForward(dc=100):
     rightp.ChangeDutyCycle(dc)
     GPIO.output(rightStepPinForward, GPIO.HIGH)
     GPIO.output(rightStepPinBackward, GPIO.LOW)
 
-
 def rightMotorStop():
     GPIO.output(rightStepPinForward, GPIO.LOW)
     GPIO.output(rightStepPinBackward, GPIO.LOW)
-
 
 def rightMotorBackward(dc=100):
     rightp.ChangeDutyCycle(dc)
@@ -44,10 +40,48 @@ def rightMotorBackward(dc=100):
     GPIO.output(rightStepPinBackward, GPIO.HIGH)
 
 
+####### Motor Encoder Functions ###############
+
+def leftMotorEncoderCallBack(channel):
+    global leftMotorEncoderTicks
+    leftMotorEncoderTicks += 1
+
+def rightMotorEncoderCallBack(channel):
+    global rightMotorEncoderTicks
+    rightMotorEncoderTicks += 1
+
+
+def sampleMotorEncoders():
+    global leftMotorEncoderTicks
+    global rightMotorEncoderTicks
+
+    leftMotorEncoderTicks = 0
+    rightMotorEncoderTicks = 0
+
+    # problem possible with variable access (from GPIO_pinouts)
+    # setting up for counting pulses
+    GPIO.add_event_detect(leftMotorEncoderOut, GPIO.FALLING, callback=leftMotorEncoderCallBack, \
+                          bouncetime=parameters.leftMotorEncoderBounceTime)
+
+    GPIO.add_event_detect(rightMotorEncoderOut, GPIO.FALLING, callback=rightMotorEncoderCallBack,\
+                          bouncetime=parameters.rightMotorEncoderBounceTime)
+
+    time.sleep(parameters.motorEncoderSampleTime)
+
+    # stop counting pulses
+    GPIO.setup(leftMotorEncoderOut, GPIO.IN)
+    GPIO.setup(rightMotorEncoderOut, GPIO.IN)
+
+    leftRPS = (float(leftMotorEncoderTicks)/20)/parameters.motorEncoderSampleTime
+    rightRPS = (float(rightMotorEncoderTicks)/20)/parameters.motorEncoderSampleTime
+
+    return leftRPS, rightRPS
+
+####### Robot Functions #######################
+
 def forward():
     leftMotorForward(parameters.left_motor_dc)
     rightMotorForward(parameters.right_motor_dc)
-
 
 def backward():
     leftMotorBackward(parameters.left_motor_dc)

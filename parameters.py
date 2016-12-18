@@ -6,6 +6,11 @@ def init():
     
     global turn_dc
     global lowest_dc
+
+    global motorEncoderSampleTime
+
+    global leftMotorEncoderBounceTime
+    global rightMotorEncoderBounceTime
     
     min_obstacle_distance = 30
     
@@ -14,3 +19,9 @@ def init():
     
     turn_dc = 90
     lowest_dc = 70
+
+    motorEncoderSampleTime = 1
+
+    leftMotorEncoderBounceTime = 50
+    rightMotorEncoderBounceTime = 70
+
