@@ -12,16 +12,16 @@ def init():
     global leftMotorEncoderBounceTime
     global rightMotorEncoderBounceTime
     
-    min_obstacle_distance = 30
+    min_obstacle_distance = 50
     
-    left_motor_dc = 100
-    right_motor_dc = 79.8
+    left_motor_dc = 88
+    right_motor_dc = 70
     
-    turn_dc = 90
+    turn_dc = 80
     lowest_dc = 70
 
-    motorEncoderSampleTime = 1
+    motorEncoderSampleTime = .5
 
-    leftMotorEncoderBounceTime = 50
-    rightMotorEncoderBounceTime = 70
+    leftMotorEncoderBounceTime = 20
+    rightMotorEncoderBounceTime = 20
 

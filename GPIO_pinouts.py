@@ -19,7 +19,7 @@ rightStepPinBackward = 26
 leftMotorEncoderOut = 19
 
 # Right Motor Encoder PIN
-rightMotorEncoderOut = 16
+rightMotorEncoderOut = 16      
 
 # Motor Encoder PINS
 
@@ -54,8 +54,10 @@ rightp = GPIO.PWM(rightSoftPWM, 50)
 
 # Left Motor Encoder
 # setup done when necessary
+GPIO.setup(leftMotorEncoderOut, GPIO.IN)
 # GPIO.setup(leftMotorEncoderOut, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 # Right Motor Encoder
+GPIO.setup(rightMotorEncoderOut, GPIO.IN)
 # GPIO.setup(rightMotorEncoderOut, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 # setup done when necessary
