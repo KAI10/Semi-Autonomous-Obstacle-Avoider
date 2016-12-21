@@ -38,22 +38,22 @@ def mode_switch():
         
         if currentMode == "Auto":
             time.sleep(0.5) 
-        time.sleep(0.5)
+        time.sleep(0.25)
         stop()    
     
 
 def main():
     
-    #manual_thread = threading.Thread(target = mode_switch)
-    #manual_thread.start()
+    manual_thread = threading.Thread(target = mode_switch)
+    manual_thread.start()
     
-    currentMode = "Auto"
+    #currentMode = "Auto"
     count = 0
     leftp.start(0)
     rightp.start(0)
     time.sleep(0.1)
 
-    forward()
+    #forward()
     start_time = time.time()
     velocityList = []
     try:

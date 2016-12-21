@@ -178,56 +178,66 @@ def adjustSpeed (right_speed, left_speed):
     parameters.right_motor_dc = max(parameters.right_motor_dc, 50) 
     
 def avoidObstacle():
-    '''
-    #  --------->
-    rightRotate()
-    forward()
-    time.sleep(1.5)
+    
+    stop()
+    time.sleep(1)
+    
+    backward()
+    time.sleep(1)
+    # turn off obstacle detection LED
+    GPIO.output(LED, 0)    
 
-    # ^
-    # |
-    # |
     leftRotate()
-    forward()
-    time.sleep(1.9)
+   
+    for count in range (1, 100):
+        forward()
+        time.sleep(0.0001)
+        sonar_distance = getSonarDistance()
+        if sonar_distance < parameters.min_obstacle_distance and sonar_distance >= 10:
+            print "Avoiding Obstacles Recursively"
+            GPIO.output(LED, 1)
+            avoidObstacle()
     
-    # <-----------
-    leftRotate()
-    forward()
-    time.sleep(1.3)
+    stop()
+    time.sleep(0.02)
     
-    # ^
-    # |
-    # |
-    rightRotate()
-    forward()
-    time.sleep(0.3)
-    '''
-    stop()
-    time.sleep(1)
-    backward()
-    time.sleep(1)
-    leftRotate()
-    forward()
-    time.sleep(1)
-    stop()
-    time.sleep(0.02)
     backward()
     time.sleep(0.04)
+    
     rightRotate()
-    forward()
-    time.sleep(1)
+        
+    for count in range (1, 105):
+        forward()
+        time.sleep(0.0001)
+        sonar_distance = getSonarDistance()
+        if sonar_distance < parameters.min_obstacle_distance and sonar_distance >= 10:
+            print "Avoiding Obstacles Recursively"
+            GPIO.output(LED, 1)
+            avoidObstacle()
+    
     stop()
     time.sleep(0.02)
+    
     backward()
     time.sleep(0.04)
+    
     rightRotate()
-    forward()
-    time.sleep(1)
+
+    for count in range (1, 100):
+        forward()
+        time.sleep(0.0001)
+        sonar_distance = getSonarDistance()
+        if sonar_distance < parameters.min_obstacle_distance and sonar_distance >= 10:
+            print "Avoiding Obstacles Recursively"
+            GPIO.output(LED, 1)
+            avoidObstacle()
+    
     stop()
     time.sleep(0.02)
+    
     backward()
     time.sleep(0.04)
+    
     leftRotate()
     
     
