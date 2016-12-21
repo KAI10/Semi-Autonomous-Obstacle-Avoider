@@ -14,7 +14,8 @@ global currentMode
 
 def mode_switch():
     global currentMode
-    currentMode = "Auto"
+    currentMode = "Manual"
+    print "switching to manual mode"
     while True:
         command = raw_input()
         if command == 's':
@@ -68,6 +69,7 @@ def main():
                 #if False:
                 if sonar_distance < parameters.min_obstacle_distance and sonar_distance >= 10:
                     print("Obstacle Ahead!!!")
+                    print sonar_distance
                     GPIO.output(LED, 1)
                     avoidObstacle()
                 else:
@@ -97,10 +99,10 @@ def main():
     except KeyboardInterrupt:
         GPIO.cleanup()
         end_time = time.time()
-        avg_v = sum(velocityList)/len(velocityList)
-        avg_v *= 3.1416*6.5
+        #avg_v = sum(velocityList)/len(velocityList)
+        #avg_v *= 3.1416*6.5
         print "Time = " + str(end_time - start_time)
-        print "Dist = " + str((end_time - start_time)*avg_v)
+        #print "Dist = " + str((end_time - start_time)*avg_v)
         pass
 
 if __name__ == "__main__":

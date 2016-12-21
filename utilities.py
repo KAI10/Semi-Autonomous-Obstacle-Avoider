@@ -142,7 +142,7 @@ def rightRotate():
     stop()
     time.sleep(0.2)
     turnRight()
-    time.sleep(0.98)
+    time.sleep(1.15)
     #turnLeft()
     #time.sleep(0.03)
     stop()
@@ -188,8 +188,10 @@ def avoidObstacle():
     GPIO.output(LED, 0)    
 
     leftRotate()
-   
-    for count in range (1, 100):
+    firstForwardTime = 1
+    firstForwardRemainingTime = firstForwardTime   
+    while firstForwardRemainingTime > 0.0:
+        loop_start_time = time.time()
         forward()
         time.sleep(0.0001)
         sonar_distance = getSonarDistance()
@@ -197,6 +199,7 @@ def avoidObstacle():
             print "Avoiding Obstacles Recursively"
             GPIO.output(LED, 1)
             avoidObstacle()
+        firstForwardRemainingTime -= time.time() - loop_start_time
     
     stop()
     time.sleep(0.02)
@@ -205,8 +208,11 @@ def avoidObstacle():
     time.sleep(0.04)
     
     rightRotate()
-        
-    for count in range (1, 105):
+    
+    secondForwardTime = 2
+    secondForwardRemainingTime = secondForwardTime   
+    while secondForwardRemainingTime > 0.0:
+        loop_start_time = time.time()
         forward()
         time.sleep(0.0001)
         sonar_distance = getSonarDistance()
@@ -214,7 +220,9 @@ def avoidObstacle():
             print "Avoiding Obstacles Recursively"
             GPIO.output(LED, 1)
             avoidObstacle()
+        secondForwardRemainingTime -= time.time() - loop_start_time
     
+
     stop()
     time.sleep(0.02)
     
@@ -223,7 +231,10 @@ def avoidObstacle():
     
     rightRotate()
 
-    for count in range (1, 100):
+    thirdForwardTime = 1
+    thirdForwardRemainingTime = thirdForwardTime   
+    while thirdForwardRemainingTime > 0.0:
+        loop_start_time = time.time()
         forward()
         time.sleep(0.0001)
         sonar_distance = getSonarDistance()
@@ -231,7 +242,8 @@ def avoidObstacle():
             print "Avoiding Obstacles Recursively"
             GPIO.output(LED, 1)
             avoidObstacle()
-    
+        thirdForwardRemainingTime -= time.time() - loop_start_time
+ 
     stop()
     time.sleep(0.02)
     
@@ -260,6 +272,6 @@ def getSonarDistance():
     sonar_echo_recieve_time = time.time()
 
     dist = (sonar_echo_recieve_time - sonar_echo_send_time) * 17000;
-    print(dist)
+    #print(dist)
     return dist
 
